@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login / Signup</title>
+  <style>
+    body {
+      font-family: 'Lato', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background: #f4f4f4;
+    }
+
+    .container {
+      width: 350px;
+      background: white;
+      padding: 30px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border-radius: 10px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .toggle {
+      text-align: center;
+      margin-top: 15px;
+      cursor: pointer;
+      color: #007bff;
+    }
+
+    .message {
+      text-align: center;
+      margin-top: 10px;
+      color: green;
+    }
+
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2 id="formTitle">Login</h2>
+    <input type="text" id="email" placeholder="Email" />
+    <input type="password" id="password" placeholder="Password" />
+    <button onclick="handleSubmit()">Login</button>
+    <div class="toggle" onclick="toggleForm()">Don't have an account? Sign up</div>
+    <div class="message" id="message"></div>
+  </div>
+
+  <script>
+    let isLogin = true;
+  
+    function toggleForm() {
+      isLogin = !isLogin;
+      document.getElementById("formTitle").textContent = isLogin ? "Login" : "Sign Up";
+      document.querySelector("button").textContent = isLogin ? "Login" : "Sign Up";
+      document.querySelector(".toggle").textContent = isLogin
+        ? "Don't have an account? Sign up"
+        : "Already have an account? Login";
+      document.getElementById("message").textContent = "";
+    }
+  
+    function handleSubmit() {
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const messageDiv = document.getElementById("message");
+  
+      if (!email || !password) {
+        messageDiv.textContent = "Please fill all fields.";
+        messageDiv.className = "message error";
+        return;
+      }
+  
+      if (isLogin) {
+        const storedUser = JSON.parse(localStorage.getItem(email));
+        if (storedUser && storedUser.password === password) {
+          messageDiv.textContent = "Login successful!";
+          messageDiv.className = "message";
+  
+          // Redirect to your site after a short delay (1 second)
+          setTimeout(() => {
+            window.location.href = "http://127.0.0.1:5500/index.html"; // change to your actual URL
+          }, 1000);
+        } else {
+          messageDiv.textContent = "Invalid credentials.";
+          messageDiv.className = "message error";
+        }
+      } else {
+        if (localStorage.getItem(email)) {
+          messageDiv.textContent = "User already exists.";
+          messageDiv.className = "message error";
+          return;
+        }
+        localStorage.setItem(email, JSON.stringify({ email, password }));
+        messageDiv.textContent = "Signup successful! You can login now.";
+        messageDiv.className = "message";
+        toggleForm();
+      }
+    }
+  </script>
+  
+
+</body>
+</html>
