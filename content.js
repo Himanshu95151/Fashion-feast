@@ -3,8 +3,8 @@ let contentTitle;
 function dynamicClothingSection(ob) {
   let boxDiv = document.createElement("div");
   boxDiv.id = "box";
-  boxDiv.className = "product-card";           // <-- added class for sorting
-  boxDiv.setAttribute("data-price", ob.price); // <-- added price attribute
+  boxDiv.className = "product-card";
+  boxDiv.setAttribute("data-price", ob.price);
 
   let boxLink = document.createElement("a");
   boxLink.href = "/contentDetails.html?" + ob.id;
@@ -22,7 +22,7 @@ function dynamicClothingSection(ob) {
   h4.appendChild(document.createTextNode(ob.brand));
 
   let h2 = document.createElement("h2");
-  h2.appendChild(document.createTextNode("rs  " + ob.price));
+  h2.appendChild(document.createTextNode("Rs " + ob.price));
 
   boxDiv.appendChild(boxLink);
   boxLink.appendChild(imgTag);
@@ -34,53 +34,53 @@ function dynamicClothingSection(ob) {
   return boxDiv;
 }
 
-let mainContainer = document.getElementById("mainContainer");
 let containerClothing = document.getElementById("containerClothing");
 let containerAccessories = document.getElementById("containerAccessories");
 
 let httpRequest = new XMLHttpRequest();
 
-httpRequest.onreadystatechange = function() {
+httpRequest.onreadystatechange = function () {
   if (this.readyState === 4) {
     if (this.status == 200) {
       contentTitle = JSON.parse(this.responseText);
 
       for (let i = 0; i < contentTitle.length; i++) {
-        if (contentTitle[i].isAccessory) {
+        if (contentTitle[i].isAccessory && containerAccessories) {
           containerAccessories.appendChild(dynamicClothingSection(contentTitle[i]));
-        } else if(contentTitle[i].isAccessory == false) {
+        } else if (!contentTitle[i].isAccessory && containerClothing) {
           containerClothing.appendChild(dynamicClothingSection(contentTitle[i]));
         }
       }
 
-      // Add event listener for the sort dropdown
+      // Add sorting functionality if sortBy element exists
       setupSorting("sortBy", [containerClothing, containerAccessories]);
 
-      // Add event listener for the search box
+      // Add search functionality if input element exists
       const searchInput = document.getElementById("input");
+      if (searchInput) {
+        searchInput.addEventListener("input", function () {
+          const query = this.value.trim().toLowerCase();
 
-      searchInput.addEventListener("input", function () {
-        const query = this.value.trim().toLowerCase();
+          if (containerClothing) containerClothing.innerHTML = "";
+          if (containerAccessories) containerAccessories.innerHTML = "";
 
-        containerClothing.innerHTML = "";  // clear clothing
-        containerAccessories.innerHTML = "";  // clear accessories
+          let filteredProducts = contentTitle.filter(product =>
+            product.name.toLowerCase().includes(query) ||
+            product.brand.toLowerCase().includes(query)
+          );
 
-        let filteredProducts = contentTitle.filter(product => 
-          product.name.toLowerCase().includes(query) || 
-          product.brand.toLowerCase().includes(query)
-        );
-
-        filteredProducts.forEach(product => {
-          if (product.isAccessory) {
-            containerAccessories.appendChild(dynamicClothingSection(product));
-          } else {
-            containerClothing.appendChild(dynamicClothingSection(product));
-          }
+          filteredProducts.forEach(product => {
+            if (product.isAccessory && containerAccessories) {
+              containerAccessories.appendChild(dynamicClothingSection(product));
+            } else if (!product.isAccessory && containerClothing) {
+              containerClothing.appendChild(dynamicClothingSection(product));
+            }
+          });
         });
-      });
+      }
 
     } else {
-      console.log("call failed!");
+      console.log("Call failed!");
     }
   }
 };
@@ -92,30 +92,31 @@ httpRequest.open(
 );
 httpRequest.send();
 
-// Sorting Function
 function setupSorting(selectId, containers) {
   const selectElement = document.getElementById(selectId);
   if (!selectElement) return;
 
-  selectElement.addEventListener("change", function() {
+  selectElement.addEventListener("change", function () {
     containers.forEach(container => {
+      if (!container) return;
+
       let products = Array.from(container.getElementsByClassName("product-card"));
       let sortedProducts = [];
 
       if (this.value === "lowToHigh") {
-        sortedProducts = products.sort((a, b) => {
-          return parseInt(a.dataset.price) - parseInt(b.dataset.price);
-        });
+        sortedProducts = products.sort((a, b) =>
+          parseInt(a.dataset.price) - parseInt(b.dataset.price)
+        );
       } else if (this.value === "highToLow") {
-        sortedProducts = products.sort((a, b) => {
-          return parseInt(b.dataset.price) - parseInt(a.dataset.price);
-        });
+        sortedProducts = products.sort((a, b) =>
+          parseInt(b.dataset.price) - parseInt(a.dataset.price)
+        );
       } else {
         sortedProducts = products;
       }
 
-      container.innerHTML = ""; // Clear container
-      sortedProducts.forEach(product => container.appendChild(product)); // Append sorted items
+      container.innerHTML = "";
+      sortedProducts.forEach(product => container.appendChild(product));
     });
   });
 }

@@ -51,7 +51,7 @@ if (signUp) {
         const docRef = doc(db, "users", user.uid);
         setDoc(docRef, userData)
           .then(() => {
-            window.location.href = 'index1.html';
+            window.location.href = 'https://www.fashionfeast.shop/';
           })
           .catch((error) => {
             console.error("Error writing document", error);
@@ -81,7 +81,7 @@ if (signIn) {
         showMessage('Login is successful', 'signInMessage');
         const user = userCredential.user;
         localStorage.setItem('loggedInUserId', user.uid);
-        window.location.href = 'http://127.0.0.1:5500/index.html';
+        window.location.href = 'https://www.fashionfeast.shop/';
       })
       .catch((error) => {
         const errorCode = error.code;
