@@ -2,16 +2,16 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title> HEADER | E-COMMERCE WEBSITE BY FASHION-FEAST </title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>HEADER | E-COMMERCE WEBSITE BY FASHION-FEAST</title>
   <link rel="icon"
     href="https://yt3.ggpht.com/a/AGF-l78km1YyNXmF0r3-0CycCA0HLA_i6zYn_8NZEg=s900-c-k-c0xffffffff-no-rj-mo"
-    type="image/gif" sizes="16x16">
-  <link rel="stylesheet" href="css/header.css">
+    type="image/gif" sizes="16x16" />
+  <link rel="stylesheet" href="css/header.css" />
   <script src="https://kit.fontawesome.com/4a3b1f73a2.js"></script>
-  <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet" />
 
   <style>
     #login-signup {
@@ -33,36 +33,76 @@
       align-items: center;
       gap: 10px;
     }
+
+    .cart-btn {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: rgb(29, 29, 29);
+      text-decoration: none;
+    }
+
+    .cart-btn .addedToCart {
+      font-size: 1.5em;
+    }
+
+    .cart-text {
+      font-weight: 600;
+      font-size: 1.1em;
+      user-select: none;
+    }
+
+    .cart-btn #badge {
+      position: absolute;
+      top: -8px;
+      right: -12px;
+      background-color: rgb(255, 30, 30);
+      color: white;
+      border-radius: 50%;
+      padding: 4px 7px;
+      font-size: 12px;
+      font-weight: bold;
+      min-width: 20px;
+      text-align: center;
+      line-height: 1;
+      pointer-events: none;
+    }
   </style>
 </head>
 
 <body>
-
   <header>
     <section>
       <!-- MAIN CONTAINER -->
       <div id="container">
         <!-- SHOP NAME -->
-        <div id="shopName"><a href="index.html"> <b>Fashion</b>Feast </a></div>
+        <div id="shopName">
+          <a href="index.html"> <b>Fashion</b>Feast </a>
+        </div>
 
         <!-- COLLECTIONS ON WEBSITE -->
         <div id="collection">
-          <div id="clothing" onclick="show_clothes()"><a href="clothing.html"> CLOTHING </a></div>
-          <div id="accessories"><a href="accessories.html"> ACCESSORIES </a></div>
+          <div id="clothing" onclick="show_clothes()">
+            <a href="clothing.html"> CLOTHING </a>
+          </div>
+          <div id="accessories">
+            <a href="accessories.html"> ACCESSORIES </a>
+          </div>
         </div>
 
         <!-- SEARCH SECTION -->
         <div id="search">
           <i class="fas fa-search search"></i>
-          <input type="text" id="input" name="searchBox" placeholder="Search for Clothing and Accessories">
+          <input type="text" id="input" name="searchBox" placeholder="Search for Clothing and Accessories" />
         </div>
 
         <!-- USER SECTION -->
         <div id="user">
-          <a href="cart.html">
-            <i class="fas fa-shopping-cart addedToCart">
-              <div id="badge">0</div>
-            </i>
+          <a href="cart.html" class="cart-btn">
+            <i class="fas fa-shopping-cart addedToCart"></i>
+            <span class="cart-text">Cart</span>
+            <div id="badge">0</div>
           </a>
           <a href="#"><i class="fas fa-user-circle userIcon"></i></a>
           <a id="login-signup" href="index1.html">Login / Signup</a>
@@ -77,11 +117,9 @@
             <option value="highToLow">Price: High to Low</option>
           </select>
         </div>
-
       </div>
     </section>
   </header>
-
 </body>
 
 </html>
