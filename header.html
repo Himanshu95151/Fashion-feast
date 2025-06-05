@@ -28,46 +28,43 @@
       background: #0056b3;
     }
 
-    #user {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
     .cart-btn {
-      position: relative;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      color: rgb(29, 29, 29);
-      text-decoration: none;
-    }
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: inherit;
+  margin-right: 16px;
+  font-size: 16px;
+}
 
-    .cart-btn .addedToCart {
-      font-size: 1.5em;
-    }
+.addedToCart {
+  font-size: 22px;
+  position: relative;
+  padding-right: 10px; /* Space to make room for the badge */
+}
 
-    .cart-text {
-      font-weight: 600;
-      font-size: 1.1em;
-      user-select: none;
-    }
+/* Badge styling - placed above top-right of the cart icon */
+#badge {
+  position: absolute;
+  top: -4px;
+  left: 14px; /* adjust to float on top-right corner */
+  background-color: red;
+  color: white;
+  font-size: 10px;
+  padding: 2px 5px;
+  border-radius: 50%;
+  font-weight: bold;
+  z-index: 1;
+  min-width: 16px;
+  text-align: center;
+}
+.cart-text,
+.login-text {
+  display: none;
+}
 
-    .cart-btn #badge {
-      position: absolute;
-      top: -8px;
-      right: -12px;
-      background-color: rgb(255, 30, 30);
-      color: white;
-      border-radius: 50%;
-      padding: 4px 7px;
-      font-size: 12px;
-      font-weight: bold;
-      min-width: 20px;
-      text-align: center;
-      line-height: 1;
-      pointer-events: none;
-    }
   </style>
 </head>
 
@@ -97,16 +94,21 @@
           <input type="text" id="input" name="searchBox" placeholder="Search for Clothing and Accessories" />
         </div>
 
-        <!-- USER SECTION -->
-        <div id="user">
-          <a href="cart.html" class="cart-btn">
-            <i class="fas fa-shopping-cart addedToCart"></i>
-            <span class="cart-text">Cart</span>
-            <div id="badge">0</div>
-          </a>
-          <a href="#"><i class="fas fa-user-circle userIcon"></i></a>
-          <a id="login-signup" href="index1.html">Login / Signup</a>
-        </div>
+ <!-- USER SECTION -->
+<div id="user">
+  <a href="cart.html" class="cart-btn">
+    <i class="fas fa-shopping-cart addedToCart"></i>
+    <span class="cart-text">Cart</span>
+    <div id="badge">0</div>
+  </a>
+
+  <a href="index1.html" class="user-btn">
+    <i class="fas fa-user-circle userIcon"></i>
+    <span class="login-text">Login / Signup</span>
+  </a>
+</div>
+ 
+
 
         <!-- Sort Dropdown -->
         <div class="sort-section">
